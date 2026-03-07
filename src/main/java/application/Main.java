@@ -1,14 +1,14 @@
 package application;
 
-import application.domain.Person;
+import application.domain.Room;
 
 public class Main {
 
     public static void main(String[] args) {
-
+ /*
         Person person = new Person("jd@med.com");
 
-        person.setId(1);
+      person.setId(1);
         person.setName("John");
         person.setLastName("Doe");
         //person.setEmail("jd@mail.com");
@@ -18,7 +18,9 @@ public class Main {
         System.out.println(person.getId());
         System.out.println(person.getName());
         System.out.println(person.getEmail());
-
-
+*/
+        Room bedRoom = new Room();
+        bedRoom.createRoom(bedRoom);
+        bedRoom.getBedRoomById(1, bedRoom);
     }
 }

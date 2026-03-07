@@ -13,7 +13,6 @@ public class Person {
     String password;
     Boolean state;
 
-
     // Constructors
 
     public Person() {
@@ -85,31 +84,19 @@ public class Person {
     // Class Methods
 
     public Person createUser(Person person){
-
-
         return person;
     }
-
 
     public Person updateUser(Person person){
-
-
         return person;
     }
-
     public List<Person> getUsers(){
         return null;
     }
-
     public Person getUserById(int id){
         return null;
     }
-
     public void deleteUser(int id){
 
         }
-
-
-
-
 }
