@@ -33,6 +33,7 @@ public class MenuApp {
                     break;
                 case 2:
                     System.out.println("Iniciar Sesion");
+                    showGuestMenu();
                     break;
                 case 3:
                     System.out.println("Saliendo de la aplicacion");
@@ -44,4 +45,52 @@ public class MenuApp {
 
         }
     }
+
+
+    public void showGuestMenu(){
+
+        System.out.println("Menu Huespedes");
+
+        Boolean init = true;
+
+        while(init){
+
+            System.out.println("Seleccione 1. Crear Huesped 2. Actualizar Huesped 3. Eliminar Huesped 4. Listar Huespedes 5. Buscar huesped por id 6. salir");
+            int option = sc.nextInt();
+            sc.nextLine();
+            switch (option){
+                case 1:
+                    System.out.println("Crear huesped");
+                    guestView.createGuest();
+                    break;
+                case 2:
+                    System.out.println("Actualizar Huesped");
+                    break;
+                case 3:
+                    System.out.println("Eliminar Huesped");
+                    break;
+                case 4:
+                    System.out.println("Listar Huespedes");
+                        guestView.getAllGuests();
+                    break;
+                case 5:
+                    System.out.println("Buscar huesped por id");
+                    break;
+                case 6:
+                    System.out.println("Saliendo del menu de huespedes");
+                    init = false;
+                    break;
+                default:
+                    System.out.println("Opcion no valida, por favor seleccione una opcion valida");
+
+            }
+
+
+
+
+
+        }
+
+    }
+
 }

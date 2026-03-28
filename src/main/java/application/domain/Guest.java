@@ -36,6 +36,6 @@ public class Guest extends Person {
         return "Guest{" +
                 "origin='" + origin + '\'' +
                 ", guestType='" + guestType + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }
