@@ -5,11 +5,9 @@ import application.domain.BedRoomType;
 import application.service.outputs.BedRoomService;
 import application.service.ports.BedRoomRepositoryPort;
 import application.service.ports.BedRoomTypeRepositoryPort;
-import application.util.FormValidationUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class BedRoomServiceImp implements BedRoomService {
 
@@ -17,6 +15,8 @@ public class BedRoomServiceImp implements BedRoomService {
 
     private final BedRoomRepositoryPort bedRoomRepositoryPort;
     private final BedRoomTypeRepositoryPort bedRoomTypeRepositoryPort;
+
+
     public BedRoomServiceImp(BedRoomRepositoryPort bedRoomRepositoryPort, BedRoomTypeRepositoryPort bedRoomTypeRepositoryPort) {
         this.bedRoomRepositoryPort = bedRoomRepositoryPort;
         this.bedRoomTypeRepositoryPort = bedRoomTypeRepositoryPort;
@@ -24,27 +24,21 @@ public class BedRoomServiceImp implements BedRoomService {
 
 
     @Override
-    public BedRoom createBedRoom() {
+    public BedRoom createBedRoom(int roomId,String room,int typeId,double  price,String state) {
 
-        BedRoom bedRoom = new BedRoom();
+        // En este punto resuelvo la agregación como una regla de negocio
+        // He convertido este paso un metodo , para poder reutilizarlo en el update
+        BedRoomType bedRoomType = addBedRoomType(typeId);
 
+        //agregué esta validación para que no permita crear id duplicados
 
-        bedRoom.setRoomId(FormValidationUtil.validateInt("Ingrese el Id de la habitacion"));
-        bedRoom.setRoom(FormValidationUtil.validateString("Ingrese el numero de la habitación"));
-
-        Optional<BedRoomType> bedRoomTypeOpt =bedRoomTypeRepositoryPort.findBedRoomTypeById(FormValidationUtil.validateInt("Ingrese el id"));
-        if(bedRoomTypeOpt.isPresent()){
-            BedRoomType bedRoomType = bedRoomTypeOpt.get();
-            bedRoom.setBedRoomType(bedRoomType);
+        if (bedRoomRepositoryPort.findBedRoomById(roomId).isPresent()) {
+            throw new IllegalArgumentException("Ya existe una habitación con id: " + roomId);
         }
 
-        bedRoom.setPrice(FormValidationUtil.validateDouble("Ingrese el precio de la habitación"));
-        bedRoom.setState(BedRoomStateSelector.bedRoomAddState());
+        BedRoom bedRoom = new BedRoom(roomId, room, bedRoomType, price, state);
 
         bedRoomRepositoryPort.saveBedRoom(bedRoom);
-
-
-
 
         return bedRoom;
     }
@@ -53,9 +47,23 @@ public class BedRoomServiceImp implements BedRoomService {
 
 
     @Override
-    public BedRoom updateBedRoom(BedRoom bedRoom) {
+    public BedRoom updateBedRoom(int id,String room,int typeId,double  price,String state) {
 
-        bedRoomRepositoryPort.updateBedRoom(1,bedRoom);
+        // Este bloque de codigo busca la habitación que se debe actualizar:
+
+        BedRoom bedRoom = bedRoomRepositoryPort.findBedRoomById(id)
+                .orElseThrow(()-> new IllegalArgumentException(
+                "Habitación no encontrada"
+        ));
+
+        BedRoomType bedRoomType = addBedRoomType(typeId);
+
+        bedRoom.setRoom(room);
+        bedRoom.setBedRoomType(bedRoomType);
+        bedRoom.setPrice(price);
+        bedRoom.setState(state);
+
+        bedRoomRepositoryPort.updateBedRoom(bedRoom.getRoomId(),bedRoom);
         return bedRoom;
     }
 
@@ -74,5 +82,19 @@ public class BedRoomServiceImp implements BedRoomService {
     @Override
     public void deleteBedRoomById(int id) {
 
+        bedRoomRepositoryPort.deleteBedRoomById(id);
+
+    }
+
+    // Separé en un metodo la logica que busca el bedRoomType , para poder reutilizarla
+    // en el create y update, asi puedo llamarla en  ambos métodos
+
+    private BedRoomType addBedRoomType(int typeId){
+        BedRoomType bedRoomType =bedRoomTypeRepositoryPort
+                .findBedRoomTypeById(typeId)
+                .orElseThrow(()-> new IllegalArgumentException(
+                        "No existe un tipo de habitación con id " + typeId
+                ));
+        return bedRoomType;
     }
 }

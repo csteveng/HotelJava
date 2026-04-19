@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface BedRoomService {
 
-    BedRoom createBedRoom();
-    BedRoom updateBedRoom(BedRoom bedRoom);
+    BedRoom createBedRoom(int roomId,String room,int typeId,double  price,String state);
+    BedRoom updateBedRoom(int id, String room, int typeId, double price, String state);
     Optional<BedRoom> getBedRoomById(int id);
     List<BedRoom> getAllBedRooms();
     void deleteBedRoomById(int id);

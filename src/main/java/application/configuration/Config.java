@@ -1,16 +1,15 @@
 package application.configuration;
 
-import application.domain.BedRoom;
 import application.domain.Guest;
 import application.repository.BedRoomRepository;
 import application.repository.BedRoomTypeRepository;
 import application.repository.GuestRepository;
 import application.service.BedRoomServiceImp;
+import application.service.GuestAdminServiceImpl;
+import application.service.GuestServiceImpl;
 import application.service.outputs.BedRoomService;
 import application.service.outputs.GuestAdminService;
-import application.service.GuestAdminServiceImpl;
 import application.service.outputs.GuestService;
-import application.service.GuestServiceImpl;
 import application.service.ports.BedRoomRepositoryPort;
 import application.userinterface.MenuApp;
 import application.view.BedRoomView;

@@ -1,6 +1,5 @@
 package application.userinterface;
 
-import application.domain.BedRoom;
 import application.util.FormValidationUtil;
 import application.view.BedRoomView;
 import application.view.GuestView;
@@ -111,9 +110,11 @@ public class MenuApp {
                     break;
                 case 2:
                     System.out.println("Actualizar Habitaciones");
+                    bedRoomView.updateBedRoom();
                     break;
                 case 3:
                     System.out.println("Eliminar Habitaciones");
+                    bedRoomView.deleteBedRoomById();
                     break;
                 case 4:
                     System.out.println("Listar Habitaciones");

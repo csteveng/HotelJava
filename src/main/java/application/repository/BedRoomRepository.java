@@ -16,9 +16,9 @@ public class BedRoomRepository implements BedRoomRepositoryPort {
 
     List<BedRoom> bedRooms = new ArrayList<>(
             Arrays.asList(
-                    new BedRoom(1, "201", BedRoomEnums.INDIVIDUAL.getDescription(), new BedRoomType(1,"Indivual"),120000, BedRoomState.DISPONIBLE.getDescription()),
-                    new BedRoom(2, "202", BedRoomEnums.DOBLE.getDescription(), new BedRoomType(1,"Doble"),180000, BedRoomState.OCUPADA.getDescription() ),
-                    new BedRoom(3, "203", BedRoomEnums.SUITE.getDescription(), new BedRoomType(1,"Suite"),240000, BedRoomState.RESERVADA.getDescription())
+                    new BedRoom(1, "201", new BedRoomType(1,"Indivual"),120000, BedRoomState.DISPONIBLE.getDescription()),
+                    new BedRoom(2, "202", new BedRoomType(1,"Doble"),180000, BedRoomState.OCUPADA.getDescription() ),
+                    new BedRoom(3, "203", new BedRoomType(1,"Suite"),240000, BedRoomState.RESERVADA.getDescription())
 
 
             ));
@@ -34,8 +34,13 @@ public class BedRoomRepository implements BedRoomRepositoryPort {
     @Override
     public BedRoom updateBedRoom( int id, BedRoom bedRoom) {
 
-        bedRooms.set(bedRooms.indexOf(bedRoom), bedRoom);
-        return bedRoom;
+        for(int i = 0; i< bedRooms.size(); i++){
+            if(bedRooms.get(i).getRoomId() == id){
+                bedRooms.set(i, bedRoom);
+                return bedRoom;
+            }
+        }
+        throw new IllegalArgumentException("Habitación con Id " + id + "no encontrada");
     }
 
     @Override
@@ -52,9 +57,6 @@ public class BedRoomRepository implements BedRoomRepositoryPort {
     @Override
     public List<BedRoom> findAllBedRooms() {
 
-        for (BedRoom bedroom : bedRooms) {
-            System.out.println(bedroom.getRoomId() + " " + bedroom.getRoom() + " " + bedroom.getRoomType() + " " + bedroom.getPrice() + " " + bedroom.getState());
-        }
         return bedRooms;
 
     }
@@ -62,21 +64,10 @@ public class BedRoomRepository implements BedRoomRepositoryPort {
     @Override
     public void deleteBedRoomById(int id) {
 
-        /**
-        bedRooms.removeIf(bedroom -> bedroom.getRoomId() == id);
-        System.out.println("Habitacion con id " + id + " ha sido eliminada.");
-        for (BedRoom bedroom : bedRooms) {
-            System.out.println(bedroom.getRoomId() + " " + bedroom.getRoom() + " " + bedroom.getRoomType() + " " + bedroom.getPrice() + " " + bedroom.isState());
-        }**/
-
         for(BedRoom bedroom: bedRooms){
             if(bedroom.getRoomId() == id){
                 bedRooms.remove(bedroom);
                 System.out.println("Habitacion con id " + id + " ha sido eliminada.");
-                for (BedRoom bedroom1 : bedRooms) {
-                    System.out.println(bedroom1.getRoomId() + " " + bedroom1.getRoom() + " " + bedroom1.getRoomType() + " " + bedroom1.getPrice() + " " + bedroom1.getState());
-                }
-                return;
             }
         }
          System.out.println("Habitacion con id " + id + " no encontrada.");
