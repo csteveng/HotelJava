@@ -1,20 +1,17 @@
 package application.domain.enums;
 
 public enum BedRoomEnums {
-
     INDIVIDUAL ("Individual"),
     DOBLE ("Doble"),
     SUITE("Suite");
 
-
     String description;
 
-     BedRoomEnums(String description) {
+    BedRoomEnums(String description) {
         this.description = description;
     }
 
-     public String getDescription() {
+    public String getDescription() {
         return description;
     }
-
 }

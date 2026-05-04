@@ -5,7 +5,6 @@ import application.domain.BedRoomType;
 import java.util.Scanner;
 
 public class BedRoomTypeView {
-
     Scanner sc = new Scanner(System.in);
 
     private final BedRoomType bedRoomType;
@@ -24,8 +23,4 @@ public class BedRoomTypeView {
         String nameType = sc.nextLine();
         bedRoomType.setType(nameType);
     }
-
-
-
-
 }

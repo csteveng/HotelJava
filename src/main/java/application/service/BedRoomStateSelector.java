@@ -7,10 +7,14 @@ public class BedRoomStateSelector {
 
     public static String bedRoomAddState(){
 
-        System.out.println("Seleccione 1. Disponible 2. Ocupada 3. En Mantenimiento 4. Reservada ");
+        System.out.println("Seleccione estado de la habitación: ");
+        System.out.println(" 1. Disponible.");
+        System.out.println(" 2. Ocupada.");
+        System.out.println(" 3. En Mantenimiento.");
+        System.out.println(" 4. Reservada.");
         String value = "";
 
-        int option = FormValidationUtil.validateInt("Opción");
+        int option = FormValidationUtil.validateInt("Seleccione una opción: ");
 
         switch (option){
             case 1:
@@ -24,12 +28,12 @@ public class BedRoomStateSelector {
                 break;
             case 4:
                 value = BedRoomState.RESERVADA.getDescription();
+                break;
             default:
-                value = "Opcion Errada";
+                value = "Opcion no válida.";
 
         }
 
         return value;
     }
-
 }

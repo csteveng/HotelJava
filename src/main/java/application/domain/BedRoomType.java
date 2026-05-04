@@ -1,7 +1,6 @@
 package application.domain;
 
 public class BedRoomType {
-
     private int idType;
     private String type;
 
@@ -31,9 +30,9 @@ public class BedRoomType {
 
     @Override
     public String toString() {
-        return "BedRoomType{" +
-                "idType=" + idType +
-                ", type='" + type + '\'' +
+        return "Tipo Habitación {" +
+                "ID tipo=" + idType +
+                ", tipo='" + type + '\'' +
                 '}';
     }
 }
